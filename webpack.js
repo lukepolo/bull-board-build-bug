@@ -1,12 +1,13 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   context: __dirname,
   entry: "./src/index",
   target: "node",
-  externals: [],
+  externals: [nodeExternals()],
   node: {
     __dirname: true,
     __filename: true,
