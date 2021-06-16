@@ -18,3 +18,6 @@ Error: Cannot find module 'ejs'
     at Layer.handle [as handle_request] (/Users/luke/Code/queue-dashboard/dist/main.js:2:146194)
     at /Users/luke/Code/queue-dashboard/dist/main.js:2:142896
 ```
+
+` Stats Do work`
+Stats Endpoint [http://localhost:3000/admin/queues/api/queues/](http://localhost:3000/admin/queues/api/queues/)
