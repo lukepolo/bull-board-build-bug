@@ -12,15 +12,24 @@ app.use("/admin/queues", router);
 const port = 3000;
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Adding Hello World Job!");
+  queueMQ.add("hello", { data: "world" });
 });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
-queueMQ.add("hello", { data: "world" });
-
 new bullmq.Worker("default", async (job) => {
   console.info("PROCESSING", job.name);
+});
+
+const queueEvents = new bullmq.QueueEvents("default");
+
+queueEvents.on("completed", (jobId) => {
+  console.log("job completed.", jobId);
+});
+
+queueEvents.on("failed", (jobId, err) => {
+  console.error("job error", err);
 });
