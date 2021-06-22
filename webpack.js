@@ -6,7 +6,6 @@ module.exports = {
   context: __dirname,
   entry: "./src/index",
   target: "node",
-  externals: [],
   node: {
     __dirname: true,
     __filename: true,

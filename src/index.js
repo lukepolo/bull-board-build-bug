@@ -1,13 +1,20 @@
 const express = require("express");
 const bullmq = require("bullmq");
-const { createBullBoard } = require("bull-board");
-const { BullMQAdapter } = require("bull-board/bullMQAdapter");
+const { createBullBoard } = require("@bull-board/api");
+const { ExpressAdapter } = require("@bull-board/express");
+const { BullMQAdapter } = require("@bull-board/api/bullMQAdapter");
 
-const queueMQ = new bullmq.Queue("default");
-const { router } = createBullBoard([new BullMQAdapter(queueMQ)]);
+const serverAdapter = new ExpressAdapter();
+
+createBullBoard({
+  queues: [new BullMQAdapter(new bullmq.Queue("default"))],
+  serverAdapter,
+});
+
 const app = express();
 
-app.use("/admin/queues", router);
+serverAdapter.setBasePath("/admin/queues");
+app.use("/admin/queues", serverAdapter.getRouter());
 
 const port = 3000;
 
