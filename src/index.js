@@ -5,9 +5,9 @@ const { ExpressAdapter } = require("@bull-board/express");
 const { BullMQAdapter } = require("@bull-board/api/bullMQAdapter");
 
 const serverAdapter = new ExpressAdapter();
-
+const queue = new bullmq.Queue("default");
 createBullBoard({
-  queues: [new BullMQAdapter(new bullmq.Queue("default"))],
+  queues: [new BullMQAdapter(queue)],
   serverAdapter,
 });
 
@@ -20,7 +20,7 @@ const port = 3000;
 
 app.get("/", (req, res) => {
   res.send("Adding Hello World Job!");
-  queueMQ.add("hello", { data: "world" });
+  queue.add("hello", { data: "world" });
 });
 
 app.listen(port, () => {
